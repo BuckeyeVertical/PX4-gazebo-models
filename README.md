@@ -1,5 +1,30 @@
-# PX4-gazebo-models
+# Buckeye Vertical PX4-gazebo-models
 Models and worlds to be used in local Fuel instances and kept up to date in [app.gazebosim.org/PX4](https://app.gazebosim.org/PX4).
+
+## Using Buckeye Vertical PX4-gazebo-models in PX4-Autopilot Clone:
+**Prerequisites:**
+Follow instructions on PX4 website to setup
+
+**Steps:**
+1. Clone PX4-Autopilot
+   ```
+   git clone https://github.com/PX4/PX4-Autopilot.git
+   cd PX4-Autopilot
+   ```
+2. Point the Gazebo_Models submodule at this fork
+   ```
+   git submodule set-url Tools/sitl_gazebo/models https://github.com/BuckeyeVertical/PX4-gazebo-models.git
+   git submodule sync
+   git submodule update --init --recursive
+   ```
+3. Verify the submodule
+   ```
+   cd Tools/sitl_gazebo/models
+    git remote -v
+    # should list origin = https://github.com/BuckeyeVertical/PX4-gazebo-models.git
+    cd ../../../
+   ```
+
 
 ## Starting GZ simulation
 In addition to providing resource files for all models and worlds, this repo also contains a simulation-gazebo script that will start a world and works in conjunction with PX4.
