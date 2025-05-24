@@ -13,13 +13,13 @@ Follow instructions on PX4 website to setup
    ```
 2. Point the Gazebo_Models submodule at this fork
    ```
-   git submodule set-url Tools/sitl_gazebo/models https://github.com/BuckeyeVertical/PX4-gazebo-models.git
+   git submodule set-url Tools/simulation/gz https://github.com/BuckeyeVertical/PX4-gazebo-models.git
    git submodule sync
    git submodule update --init --recursive
    ```
    or if you prefer ssh:
    ```
-   git submodule set-url Tools/sitl_gazebo/models git@github.com:BuckeyeVertical/PX4-gazebo-models.git
+   git submodule set-url Tools/simulation/gz git@github.com:BuckeyeVertical/PX4-gazebo-models.git
    git submodule sync
    git submodule update --init --recursive
    ```
