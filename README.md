@@ -25,10 +25,10 @@ Follow instructions on PX4 website to setup
    ```
 4. Verify the submodule
    ```
-   cd Tools/sitl_gazebo/models
+   cd Tools/simulation/gz
     git remote -v
     # should list origin = https://github.com/BuckeyeVertical/PX4-gazebo-models.git
-    cd ../../../
+    cd ../../..
    ```
 
 
