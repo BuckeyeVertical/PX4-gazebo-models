@@ -33,6 +33,7 @@ Follow instructions on PX4 website to setup
 
 
 ## Starting GZ simulation
+**The following is not recommended for Buckeye Vertical. Please use the cmake startup scripts.**
 In addition to providing resource files for all models and worlds, this repo also contains a simulation-gazebo script that will start a world and works in conjunction with PX4.
 
 In order for this script to work, you must have installed gz-garden beforehand. The way to do this can be found [here](https://gazebosim.org/docs/garden/install_ubuntu):
