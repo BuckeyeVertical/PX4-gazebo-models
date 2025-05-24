@@ -17,7 +17,13 @@ Follow instructions on PX4 website to setup
    git submodule sync
    git submodule update --init --recursive
    ```
-3. Verify the submodule
+   or if you prefer ssh:
+   ```
+   git submodule set-url Tools/sitl_gazebo/models git@github.com:BuckeyeVertical/PX4-gazebo-models.git
+   git submodule sync
+   git submodule update --init --recursive
+   ```
+4. Verify the submodule
    ```
    cd Tools/sitl_gazebo/models
     git remote -v
