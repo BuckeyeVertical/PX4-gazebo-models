@@ -8,7 +8,7 @@ Follow instructions on PX4 website to setup
 **Steps:**
 1. Clone PX4-Autopilot
    ```
-   git clone https://github.com/PX4/PX4-Autopilot.git
+   git clone https://github.com/PX4/PX4-Autopilot.git --recursive
    cd PX4-Autopilot
    ```
 2. Point the Gazebo_Models submodule at this fork
