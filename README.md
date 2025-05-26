@@ -33,6 +33,10 @@ Follow instructions on PX4 website to setup
 
 
 ## Starting GZ simulation
+
+Run this:
+```PX4_GZ_WORLD=bv_mission make px4_sitl gz_x500_gimbal```
+
 **The following is not recommended for Buckeye Vertical. Please use the cmake startup scripts.**
 In addition to providing resource files for all models and worlds, this repo also contains a simulation-gazebo script that will start a world and works in conjunction with PX4.
 
