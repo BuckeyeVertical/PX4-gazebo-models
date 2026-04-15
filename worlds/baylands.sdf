@@ -51,7 +51,7 @@
       <name>bv_line_hatchback</name>
       <static>true</static>
       <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
-        <label>0</label>
+        <label>2</label>
       </plugin>
       <pose relative_to='world'>0 10 2 0 0 0</pose>
     </include>
@@ -60,7 +60,7 @@
       <name>bv_line_ball</name>
       <static>true</static>
       <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
-        <label>1</label>
+        <label>3</label>
       </plugin>
       <pose relative_to='world'>17.678 27.678 2 0 0 0</pose>
     </include>
@@ -69,7 +69,7 @@
       <name>bv_line_rc_cessna</name>
       <static>true</static>
       <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
-        <label>2</label>
+        <label>4</label>
       </plugin>
       <pose relative_to='world'>35.355 45.355 2 0 0 0</pose>
     </include>
@@ -78,16 +78,16 @@
       <name>bv_line_person</name>
       <static>true</static>
       <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
-        <label>3</label>
+        <label>0</label>
       </plugin>
-      <pose relative_to='world'>53.033 63.033 2 0 0 0</pose>
+      <pose relative_to='world'>53.033 63.033 0 1.5708 0 0</pose>
     </include>
     <include>
       <uri>model://bus</uri>
       <name>bv_line_bus</name>
       <static>true</static>
       <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
-        <label>4</label>
+        <label>5</label>
       </plugin>
       <pose relative_to='world'>70.711 80.711 2 0 0 0</pose>
     </include>
@@ -96,7 +96,7 @@
       <name>bv_line_stop_sign</name>
       <static>true</static>
       <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
-        <label>5</label>
+        <label>6</label>
       </plugin>
       <pose relative_to='world'>88.388 98.388 2 0 0 0</pose>
     </include>
@@ -106,8 +106,19 @@
       <static>true</static>
       <pose relative_to='world'>106.066 116.066 2 0 0 0</pose>
       <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
-        <label>6</label>
+        <label>7</label>
       </plugin>
+    </include>
+    <include>
+      <uri>
+        https://fuel.gazebosim.org/1.0/OpenRobotics/models/tent
+      </uri>
+      <name>tent</name>
+      <static>true</static>
+      <plugin filename="gz-sim-label-system" name="gz::sim::systems::Label">
+        <label>1</label>
+      </plugin>
+      <pose relative_to='world'>10 0 0 0 0 0</pose>
     </include>
     <spherical_coordinates>
       <surface_model>EARTH_WGS84</surface_model>
