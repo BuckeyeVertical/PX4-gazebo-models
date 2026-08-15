@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <mutex>
 
 #include <gz/sim/System.hh>
@@ -38,7 +39,6 @@ private:
 	double pitch_cmd_{0.0};
 
 	std::chrono::steady_clock::duration last_pub_time_{0};
-	std::chrono::steady_clock::duration last_print_time_{0};
 	std::chrono::steady_clock::duration pub_period_{0};
 };
 } // namespace custom

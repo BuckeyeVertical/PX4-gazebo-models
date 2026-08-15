@@ -3,7 +3,9 @@
 #include <cmath>
 
 #include <gz/plugin/Register.hh>
+#include <gz/sim/Model.hh>
 #include <gz/sim/Util.hh>
+#include <gz/sim/World.hh>
 
 using namespace custom;
 
@@ -18,18 +20,28 @@ GZ_ADD_PLUGIN_ALIAS(GimbalStabilizerSystem,
 		    "gz::sim::systems::GimbalStabilizerSystem")
 
 void GimbalStabilizerSystem::Configure(
-	const gz::sim::Entity &/*_entity*/,
+	const gz::sim::Entity &_entity,
 	const std::shared_ptr<const sdf::Element> &_sdf,
-	gz::sim::EntityComponentManager &/*_ecm*/,
+	gz::sim::EntityComponentManager &_ecm,
 	gz::sim::EventManager &/*_eventMgr*/)
 {
+	const auto modelName = gz::sim::Model(_entity).Name(_ecm);
+	const auto worldName = gz::sim::World(gz::sim::worldEntity(_ecm))
+		.Name(_ecm).value_or("default");
+	const auto imuDefault = "/world/" + worldName + "/model/" + modelName
+		+ "/link/camera_link/sensor/camera_imu/imu";
+	const auto rollDefault = "/model/" + modelName + "/command/gimbal_roll";
+	const auto pitchDefault = "/model/" + modelName + "/command/gimbal_pitch";
+
 	auto imuTopic = _sdf->Get<std::string>("imu_topic",
-		"/world/baylands/model/x500_gimbal_0/link/camera_link/sensor/camera_imu/imu").first;
-	auto rollTopic = _sdf->Get<std::string>("roll_topic",
-		"/model/x500_gimbal_0/command/gimbal_roll").first;
-	auto pitchTopic = _sdf->Get<std::string>("pitch_topic",
-		"/model/x500_gimbal_0/command/gimbal_pitch").first;
+		imuDefault).first;
+	auto rollTopic = _sdf->Get<std::string>("roll_topic", rollDefault).first;
+	auto pitchTopic = _sdf->Get<std::string>("pitch_topic", pitchDefault).first;
 	auto controlRate = _sdf->Get<double>("control_rate", 50.0).first;
+	if (!std::isfinite(controlRate) || controlRate <= 0.0) {
+		gzerr << "GimbalStabilizer: control_rate must be positive" << std::endl;
+		return;
+	}
 
 	pub_period_ = std::chrono::duration_cast<std::chrono::steady_clock::duration>(
 		std::chrono::duration<double>(1.0 / controlRate));
@@ -37,7 +49,10 @@ void GimbalStabilizerSystem::Configure(
 	roll_pub_ = node_.Advertise<gz::msgs::Double>(rollTopic);
 	pitch_pub_ = node_.Advertise<gz::msgs::Double>(pitchTopic);
 
-	node_.Subscribe(imuTopic, &GimbalStabilizerSystem::HandleImu, this);
+	if (!node_.Subscribe(imuTopic, &GimbalStabilizerSystem::HandleImu, this)) {
+		gzerr << "GimbalStabilizer: failed to subscribe to " << imuTopic << std::endl;
+		return;
+	}
 
 	gzmsg << "GimbalStabilizer: listening to " << imuTopic
 	       << ", publishing roll to " << rollTopic
@@ -83,16 +98,6 @@ void GimbalStabilizerSystem::PreUpdate(
 	gz::msgs::Double pitchMsg;
 	pitchMsg.set_data(pitch);
 	pitch_pub_.Publish(pitchMsg);
-
-	// Print status once per second (stdout so it's visible at any verbosity level)
-	if (_info.simTime - last_print_time_ >=
-	    std::chrono::duration_cast<std::chrono::steady_clock::duration>(
-	        std::chrono::duration<double>(1.0)))
-	{
-		last_print_time_ = _info.simTime;
-		std::cout << "[GimbalStabilizer] running: pitch=" << pitch
-		          << " rad, roll=" << roll << " rad" << std::endl;
-	}
 }
 
 void GimbalStabilizerSystem::QuaternionToRollPitch(
